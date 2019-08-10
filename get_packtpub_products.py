@@ -23,7 +23,7 @@ c_handler = logging.StreamHandler()
 c_handler.setLevel(logging.INFO)
 
 # Create formatters and add it to handlers
-LOG_FORMAT = "[%(asctime)s - %(levelname)s - %(module)s:%(lineno)s - %(funcName)35s() ] %(message)s"
+LOG_FORMAT = "[%(asctime)s - %(levelname)s - %(module)s:%(lineno)5s ] %(message)s"
 c_format = logging.Formatter(LOG_FORMAT)
 c_handler.setFormatter(c_format)
 
@@ -197,7 +197,7 @@ def save_df_to_csv(df):
     """
     logger.info("Saving dataframe as a csv file...")
     now = datetime.datetime.now()
-    csv_dir = "csv/"
+    csv_dir = ""
     csv_file_name = now.strftime("%F") + "-packt-pub-products-library.csv"
     csv_file_full_path = csv_dir + csv_file_name
     logger.info(f"Saving to '{csv_file_full_path}'")
