@@ -7,4 +7,5 @@ venv/
 # files
 *log
 *csv
+*html
 .env
