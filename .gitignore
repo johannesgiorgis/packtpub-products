@@ -1,0 +1,10 @@
+
+# directories
+.ipynb_checkpoints/
+.vscode/
+venv/
+
+# files
+*log
+*csv
+.env
