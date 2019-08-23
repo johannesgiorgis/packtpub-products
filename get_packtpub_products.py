@@ -43,7 +43,8 @@ def login():
     login to the packtpub web page
     """
     logger.info("Logging in...")
-    chrome_driver = "/usr/bin/chromedriver"
+    #chrome_driver = "/usr/bin/chromedriver"
+    chrome_driver = "/usr/local/bin/chromedriver"
     browser = webdriver.Chrome(executable_path=chrome_driver)
     browser.get(PACKTPUB_PRODUCTS_URL)
 
