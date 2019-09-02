@@ -30,12 +30,25 @@ c_handler.setFormatter(c_format)
 # Add handlers to the logger
 logger.addHandler(c_handler)
 
-load_dotenv()
-
-EMAIL = os.getenv("EMAIL")
-PASSWORD = os.getenv("PASSWORD")
-
 PACKTPUB_PRODUCTS_URL = "https://account.packtpub.com/account/products"
+
+
+def getCredentials():
+    '''
+    returns email address and password
+    '''
+    logger.info("Getting credentials...")
+    load_dotenv()
+
+    if "EMAIL" not in os.environ or "PASSWORD" not in os.environ:
+        logger.error("Credentials are not present!")
+        raise Exception("Please add EMAIL and PASSWORD to environment variables!")
+        sys.exit(1)
+
+    email = os.getenv("EMAIL")
+    password = os.getenv("PASSWORD")
+    logger.info("Completed getting credentials")
+    return email, password
 
 
 def login():
@@ -43,13 +56,16 @@ def login():
     login to the packtpub web page
     """
     logger.info("Logging in...")
+
+    email, password = getCredentials()
+
     chrome_driver = "/usr/bin/chromedriver"
     browser = webdriver.Chrome(executable_path=chrome_driver)
     browser.get(PACKTPUB_PRODUCTS_URL)
 
     delay = 30  # seconds
     try:
-        username = WebDriverWait(browser, delay).until(
+        username_input = WebDriverWait(browser, delay).until(
             EC.presence_of_element_located(
                 (
                     By.XPATH,
@@ -61,12 +77,12 @@ def login():
     except TimeoutException:
         logger.exception("Loading Login Page took too much time!")
 
-    password = browser.find_element_by_xpath(
+    password_input = browser.find_element_by_xpath(
         "/html/body/app-root/div/ng-component/div/div/ng-component/div/form/div[2]/input"
     )
 
-    username.send_keys(EMAIL)
-    password.send_keys(PASSWORD)
+    username_input.send_keys(email)
+    password_input.send_keys(password)
 
     login_button = browser.find_element_by_xpath(
         "/html/body/app-root/div/ng-component/div/div/ng-component/div/form/button"
