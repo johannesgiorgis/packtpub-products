@@ -30,8 +30,6 @@ c_handler.setFormatter(c_format)
 # Add handlers to the logger
 logger.addHandler(c_handler)
 
-PACKTPUB_PRODUCTS_URL = "https://account.packtpub.com/account/products"
-
 
 def getCredentials():
     '''
@@ -60,6 +58,7 @@ def login():
     email, password = getCredentials()
 
     chrome_driver = "/usr/bin/chromedriver"
+    packtpub_product_url = "https://account.packtpub.com/account/products"
     browser = webdriver.Chrome(executable_path=chrome_driver)
     browser.get(PACKTPUB_PRODUCTS_URL)
 
